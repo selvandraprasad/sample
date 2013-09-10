@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>First PhoneGap Android App</title>
+
+	  <script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="jquery-1.7.1.js"></script>
+       <script type="text/javascript" charset="utf-8" src="myapp.js"></script>
+      
+        
+
+  </head>
+  <body onLoad="onDOMLoaded()" >
+   <a href="#" onClick="beep(); return false;"><h1> Tap to here Beep sound</h1></a>
+    <a href="#" onClick="vibrate(); return false;"><h1> Tap here to Vibrate</h1></a>
+
+    <div id="deviceInfDiv">
+        <a href="#" onClick="deviceInfo(); return false;"><h1> Tap here to know Device Info</h1></a>
+     </div>
+     
+      <a href="#" onClick="checkNetworkConnection(); return false;"><h1> Tap here to check network connection</h1></a>
+      <div id="geolocation"> <a href="#" onClick="checkcurrentLocation(); return false;"><h1> Tap here to check current location</h1></a></div>
+    </body>
+</html>
