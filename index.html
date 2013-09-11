@@ -1,26 +1,68 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <meta name="viewport" content="width=320; user-scalable=no" />
+<head>
+    <meta name = "viewport" content = "user-scalable=no,width=device-width" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>First PhoneGap Android App</title>
+    <title>Test Page</title>
 
-	  <script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>
-	  <script type="text/javascript" charset="utf-8" src="jquery-1.7.1.js"></script>
-       <script type="text/javascript" charset="utf-8" src="myapp.js"></script>
-      
-        
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <style type="text/css">
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+        }
+    </style>
+  <script type="text/javascript" charset="utf-8">
+      function init() {
+          document.addEventListener("deviceready", ready, true);
+      }
 
-  </head>
-  <body onLoad="onDOMLoaded()" >
-   <a href="#" onClick="beep(); return false;"><h1> Tap to here Beep sound</h1></a>
-    <a href="#" onClick="vibrate(); return false;"><h1> Tap here to Vibrate</h1></a>
+      function ready() {
+          console.log("App is ready.");
+      }
 
-    <div id="deviceInfDiv">
-        <a href="#" onClick="deviceInfo(); return false;"><h1> Tap here to know Device Info</h1></a>
-     </div>
-     
-      <a href="#" onClick="checkNetworkConnection(); return false;"><h1> Tap here to check network connection</h1></a>
-      <div id="geolocation"> <a href="#" onClick="checkcurrentLocation(); return false;"><h1> Tap here to check current location</h1></a></div>
-    </body>
+      function download() {
+
+       //   var remoteFile = "https://dl.dropbox.com/u/6731723/a.zip";
+          var remoteFile = "https://dl.dropbox.com/u/6731723/Beaver.pdf";
+          var localFileName = remoteFile.substring(remoteFile.lastIndexOf('/') + 1);
+
+          window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+              fileSystem.root.getFile(localFileName, { create: true, exclusive: false }, function (fileEntry) {
+                  var localPath = fileEntry.fullPath;
+                  console.log("localPath1:" + localPath);
+                  if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
+                      localPath = localPath.substring(7);
+                  }
+                  console.log("localPath2 save:" + localPath);
+                  var ft = new FileTransfer();
+                  ft.download(remoteFile,
+                      localPath, function (entry) {
+                          console.log("file path:" + entry.fullPath);
+                          var linkopen = document.getElementById("openlink");
+                          linkopen.style.display = "block";
+                          linkopen.href = entry.fullPath;
+
+                          // var dwnldImg = document.getElementById("dwnldImg");
+                          //dwnldImg.src = entry.fullPath;
+                          //dwnldImg.style.visibility = "visible";
+                          //dwnldImg.style.display = "block";
+                      }, fail);
+              }, fail);
+          }, fail);
+      }
+
+      function fail(error) {
+          console.log("error:" + error.code);
+      }
+  </script>
+</head>
+
+<body onload="init();">
+    <a href="#" onclick="download();">Download file</a>
+
+    <br />
+    <br />
+    <br />
+    <a href="#" id="openlink" style="display:none;font-size:larger;">open</a>
+</body>
 </html>
